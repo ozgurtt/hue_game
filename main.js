@@ -26,7 +26,7 @@ io.on('connection', function(socket){
 
   socket.on('disconnect', function(){
     console.log(players[socket.id].name+" left the room");
-    io.emmit("remove user", socket.id);
+    io.emit("remove user", socket.id);
     delete players[socket.id]
   });
 
