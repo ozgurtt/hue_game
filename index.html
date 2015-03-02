@@ -14,49 +14,66 @@
         <link rel="stylesheet" type="text/css" href="style/jogo.css">
     </head>
     <body>
-        <form id="login">
-            <label for="nickname">Please enter your nickname</label>
-            <input type="text" name="nickname" id="nickname" />
-            <br/>
-            <label> Please pick a color </label>
-            <ul>
-                <li>
-                    <input type="radio" name="color" value="yellow" />
-                    <img src="images/player/yellow.png">
-                </li>
-                <li>
-                    <input type="radio" name="color" value="blue" />
-                    <img src="images/player/blue.png">
-                </li>
-                <li>
-                    <input type="radio" name="color" value="green" />
-                    <img src="images/player/green.png">
-                </li>
-                <li>
-                    <input type="radio" name="color" value="red" />
-                    <img src="images/player/red.png">
-                </li>
+        <div id="login">
+            <form>
+                <label for="nickname">Please enter your nickname</label>
+                <input type="text" name="nickname" id="nickname" />
+                <br/>
+                <label> Please pick a color </label>
+                <ul>
+                    <li>
+                        <input type="radio" name="color" value="yellow" id="yellow" />
+                        <label for="yellow">
+                            <img src="images/player/yellow.png">
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="color" value="blue" id="blue" />
+                        <label for="blue">
+                            <img src="images/player/blue.png">
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="color" value="green" id="green" />
+                        <label for="green">
+                            <img src="images/player/green.png">
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="color" value="red" id="red" />
+                        <label for="red">
+                            <img src="images/player/red.png">
+                        </label>
+                    </li>
 
-                <li>
-                    <input type="radio" name="color" value="orange" />
-                    <img src="images/player/orange.png">
-                </li>
-                <li>
-                    <input type="radio" name="color" value="pink" />
-                    <img src="images/player/pink.png">
-                </li>
-                <li>
-                    <input type="radio" name="color" value="white" />
-                    <img src="images/player/white.png">
-                </li>
-                <li>
-                    <input type="radio" name="color" value="black" />
-                    <img src="images/player/black.png">
-                </li>
-            </ul>
-            <button id="start">Start</button>
-        </form>
-        <div id="field"></div>
+                    <li>
+                        <input type="radio" name="color" value="orange" id="orange" />
+                        <label for="orange">
+                            <img src="images/player/orange.png">
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="color" value="pink" id="pink" />
+                        <label for="pink">
+                            <img src="images/player/pink.png">
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="color" value="white" id="white" />
+                        <label for="white">
+                            <img src="images/player/white.png">
+                        </label>
+                    </li>
+                    <li>
+                        <input type="radio" name="color" value="black" id="black" />
+                        <label for="black">
+                            <img src="images/player/black.png">
+                        </label>
+                    </li>
+                </ul>
+                <button id="start">Start</button>
+            </form>
+        </div>
 
         <script src="/socket.io/socket.io.js"></script>
 

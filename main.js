@@ -13,11 +13,15 @@ app.get('/', function(req, res){
 
 var players = {};
 
+var flag = "";
+
 io.on('connection', function(socket){
   players[socket.id] = {};
 
+  io.to(socket.id).emit("populate", players);
+
   socket.on('add player', function(player) {
-    io.to(socket.id).emit("populate", players);
+    
   	players[socket.id] = player;
     console.log(JSON.stringify(players));
     io.emit('new player', player);
@@ -27,13 +31,19 @@ io.on('connection', function(socket){
   socket.on('disconnect', function(){
     console.log(players[socket.id].name+" left the room");
     io.emit("remove user", socket.id);
-    delete players[socket.id]
+    delete players[socket.id];
   });
 
   socket.on("move", function(user) {
     players[user.id].position = user.position;
     io.emit("move", user);
   })
+
+  socket.on("flag", function(id) {
+    flag = id;
+    console.log(players[id].name+" has the flag");
+    io.emit("flag", id);
+  });
 });
 
 var port = process.env.PORT || 3000

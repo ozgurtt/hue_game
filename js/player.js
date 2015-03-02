@@ -1,6 +1,7 @@
 window.Player = function(playerObject) {
 
 	this.config = playerObject;
+	this.hasFlag = false;
 
 	this.draw = function() {
 		var field = $("#field")
@@ -43,13 +44,36 @@ window.Player = function(playerObject) {
 	 //  context.stroke();
 
 	 if(typeof(this.config.position) === "undefined") {
-	 	this.config['position'] = {x: 0, y: 0, w: 100, h: 100};
+	 	var pos = getPosition(random(0,7));
+	 	this.config['position'] = {x: pos.x, y: pos.y, w: 100, h: 100};
+	 	console.debug(this.config['position']);
 	 }
 
-    this["crafty"] = Crafty.e('2D, Canvas, player_'+this.config.color+', Fourway')
-	  .attr(this.config.position);
+    this["crafty"] = Crafty.e('2D, DOM, player_'+this.config.color+', Fourway, Collision, Model')
+	  .attr(this.config.position)
+	  .collision()
+	  .attr({playerId: this.config.id});
 
 	  //this.config["position"] = this.crafty.attr();
 	}
 
+}
+
+function random(min, max) {
+	return Math.floor(Math.random() * (max - min)) + min;
+}
+
+function getPosition(i) {
+	var total_players = 8;
+	var x = sanitize(Math.floor(Math.cos(i/total_players * 2*Math.PI)*1000+1000));
+	var y = sanitize(Math.floor(Math.sin(i/total_players * 2*Math.PI)*1000+1000));
+	return {x: x, y: y};
+}
+
+function sanitize(n) {
+	if(n > 100) {
+		return n-100;
+	} else {
+		return n;
+	}
 }
