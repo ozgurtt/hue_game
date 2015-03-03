@@ -11,7 +11,7 @@ app.get('/', function(req, res){
   res.sendFile(__dirname + '/index.html');
 });
 
-var players = {};
+var players = {size: 0};
 
 var flag = "";
 
@@ -20,10 +20,13 @@ io.on('connection', function(socket){
 
   io.to(socket.id).emit("populate", players);
 
-  socket.on('add player', function(player) {
-    
+  socket.on('add player', function(player, fn) {
+    var pos = getPosition(players.size);
+    player['position'] = {x: pos.x, y: pos.y, w: 100, h: 100};
+    player['points'] = 0;
   	players[socket.id] = player;
-    console.log(JSON.stringify(players));
+    players.size++;
+    fn(player);
     io.emit('new player', player);
   	console.log(player.name+" joined the room");
   })
@@ -32,6 +35,7 @@ io.on('connection', function(socket){
     console.log(players[socket.id].name+" left the room");
     io.emit("remove user", socket.id);
     delete players[socket.id];
+    players.size--;
   });
 
   socket.on("move", function(user) {
@@ -41,10 +45,35 @@ io.on('connection', function(socket){
 
   socket.on("flag", function(id) {
     flag = id;
-    console.log(players[id].name+" has the flag");
+    console.log(players[id].name+" has the banana");
     io.emit("flag", id);
   });
+
+  socket.on("goal", function(id) {
+    if(flag === id) {
+      var rad = Math.sqrt(Math.pow(players[id].position.x-1000, 2) + Math.pow(players[id].position.y-1000, 2));
+      console.log(rad);
+      if(rad > 1000) {
+        players[id].points += 10;
+        console.log(players[id].name+" owned 10 points");
+        flag = "";
+        io.emit("flag", "");
+      }
+    }
+  })
 });
+
+function getPosition(i) {
+  var total_players = 8;
+  var x = sanitize(Math.floor(Math.cos(i/total_players * 2*Math.PI)*1000+1000));
+  var y = sanitize(Math.floor(Math.sin(i/total_players * 2*Math.PI)*1000+1000));
+  console.log("x:"+x+", y:"+y)
+  return {x: x, y: y};
+}
+
+function sanitize(n) {
+  return n-50;
+}
 
 var port = process.env.PORT || 3000
 

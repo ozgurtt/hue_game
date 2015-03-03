@@ -49,12 +49,17 @@ window.Player = function(playerObject) {
 	 	console.debug(this.config['position']);
 	 }
 
-    this["crafty"] = Crafty.e('2D, DOM, player_'+this.config.color+', Fourway, Collision, Model')
+    this["crafty"] = Crafty.e('2D, DOM, Fourway, Collision, Model, player_'+this.config.color)
 	  .attr(this.config.position)
 	  .collision()
 	  .attr({playerId: this.config.id});
 
 	  //this.config["position"] = this.crafty.attr();
+	}
+
+	this.setBanana = function() {
+		// this.crafty.toggleComponent("player_banana")
+		// this.crafty.toggleComponent("player_"+this.config.color, "player_banana_"+this.config.color);
 	}
 
 }

@@ -47,6 +47,12 @@ body, html {
 	background-color: #F9A846;
 }
 
+.arena {
+	border: 10px solid red;
+	border-radius: 50%;
+	box-sizing: border-box;
+}
+
 div.player {
 	position: absolute;
 	z-index: 2;
